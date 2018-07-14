@@ -138,11 +138,33 @@ const removeFriendRequest = async (req, res) => {
         });
         // if the object don't exist
         if (!pending) return res.send({ next: false, code: 'ObjectNotFound' });
-        res.send({next: true});
+        res.send({ next: true });
     } catch (error) {
         res.send({ next: false, code: 'ServerError', error: error });
     }
 };
+const pendingRequests = async (req, res) => {
+    const { _id } = req.user;
+    const pending_requests = await PendingRequest.find({
+        $or: [{ from: _id }, { to: _id }]
+    }).populate({path: 'from to', select: '-_id -password -__v '})
+    res.send({
+        next: true,
+        pending_requests
+    });
+};
+const conversations = async (req, res) => {
+    const { _id } = req.user;
+    let conversations_list = await Conversation.find({
+        $or: [{ user1: _id }, { user2: _id }]
+    }).populate({path: 'user1 user2', select: '-_id -password -__v '})
+    res.send({
+        next: true,
+        conversations: conversations_list
+    });
+};
 export { friendRequest };
 export { acceptFriendRequest };
 export { removeFriendRequest };
+export { pendingRequests };
+export { conversations };
