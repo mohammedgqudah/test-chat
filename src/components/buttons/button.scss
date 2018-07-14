@@ -1,0 +1,10 @@
+@import '../app/base';
+.Button {
+    background-color: $primary;
+    border: none;
+    padding: 20px;
+    border-radius: 4px;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: 300;
+}

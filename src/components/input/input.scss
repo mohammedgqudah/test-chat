@@ -1,0 +1,17 @@
+@import '../app/base';
+.InputGroup {
+    width: 100%;
+    margin-bottom: $input_margin;
+    .Input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border: 1px solid $primary;
+        color: $black;
+    }
+    .Error {
+        margin: 0;
+        margin-top: 5px;
+        color: $danger;
+    }
+}

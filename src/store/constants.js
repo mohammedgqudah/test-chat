@@ -1,0 +1,11 @@
+const constants = {
+    /* LOGIN */
+    LOGIN_START: 'LOGIN_START',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGIN_ERROR: 'LOGIN_ERROR',
+    /* SIGNUP */
+    SIGNUP_START: 'SIGNUP_START',
+    SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
+    SIGNUP_ERROR: 'SIGNUP_ERROR',
+};
+export default constants;

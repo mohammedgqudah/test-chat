@@ -1,0 +1,23 @@
+@import '../app/base';
+.Form {
+    padding: 0;
+    position: relative;
+    padding-top: 30px;
+    width: 100%;
+    .Header {
+        width: 50%;
+        padding: 10px;
+        border-radius: 5px;
+        @extend .AllCenter;
+        background-color: $primary;
+        position: absolute;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        .Title {
+            text-align: center;
+            font-size: 3rem;
+            color: $white;
+            font-weight: 300;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "ajlun",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "babel-node": "babel-node --presets=env",
+        "start": "nodemon --exec npm run babel-node -- ./server.js",
+        "build": "babel src -d dist"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "*",
+        "body-parser": "*",
+        "express": "*",
+        "hbs": "*",
+        "joi": "*",
+        "jsonwebtoken": "*",
+        "mongoose": "*",
+        "mongoose-beautiful-unique-validation": "*",
+        "mongoose-paginate": "*",
+        "morgan": "*",
+        "passport": "*",
+        "passport-jwt": "*",
+        "socket.io": "^2.1.1"
+    },
+    "devDependencies": {
+        "babel-cli": "*",
+        "babel-preset-env": "*",
+        "babel-preset-stage-2": "*",
+        "color": "*",
+        "nodemon": "*"
+    }
+}
