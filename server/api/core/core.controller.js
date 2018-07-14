@@ -125,5 +125,24 @@ const acceptFriendRequest = async (req, res) => {
         res.send({ next: false, code: 'ServerError', error: error });
     }
 };
+const removeFriendRequest = async (req, res) => {
+    const schema = acceptFriendRequestSchema;
+    let { error } = Joi.validate(req.body, schema);
+    if (error) return res.send({ ...InvalidBody, error: error.details });
+    const { pending_id } = req.body;
+    try {
+        // @find and remove the pending request object
+        let pending = await PendingRequest.findOneAndRemove({
+            _id: pending_id,
+            $or: [{ to: req.user._id }, { from: req.user._id }]
+        });
+        // if the object don't exist
+        if (!pending) return res.send({ next: false, code: 'ObjectNotFound' });
+        res.send({next: true});
+    } catch (error) {
+        res.send({ next: false, code: 'ServerError', error: error });
+    }
+};
 export { friendRequest };
 export { acceptFriendRequest };
+export { removeFriendRequest };
