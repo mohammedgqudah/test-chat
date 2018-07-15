@@ -7,7 +7,7 @@ const ConversationSchema = new mongoose.Schema({
     user2: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
+    }
 });
 
 export default mongoose.model('Conversation', ConversationSchema);
