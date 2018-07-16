@@ -896,6 +896,10 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000865"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000865.tgz#70026616e8afe6e1442f8bb4e1092987d81a2f25"
 
+canvas-renderer@~2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/canvas-renderer/-/canvas-renderer-2.0.1.tgz#0124a39b2022010d3a3533225da5f4a0aa08263d"
+
 capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
@@ -1921,6 +1925,12 @@ isobject@^2.0.0:
 isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
+
+jdenticon@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/jdenticon/-/jdenticon-2.1.0.tgz#a94f0434d3537d66a831502a6e6e593b186515fb"
+  dependencies:
+    canvas-renderer "~2.0.1"
 
 joi@*:
   version "13.4.0"

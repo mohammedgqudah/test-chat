@@ -14,6 +14,7 @@ import { SECRET } from './api/development';
 
 connect();
 const app = express();
+const fileUpload = require('express-fileupload');
 const server = http.Server(app);
 const port = process.env.PORT || 3000;
 app.set('view engine', 'hbs');
@@ -23,6 +24,7 @@ app.use('/app', (req, res) => {
 });
 
 app.use(logger('dev'));
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {

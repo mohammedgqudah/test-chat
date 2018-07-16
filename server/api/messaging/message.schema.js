@@ -1,5 +1,19 @@
 import Joi from 'joi';
 
+const createServerMessageSchema = Joi.object()
+    .options({ abortEarly: false })
+    .keys({
+        content: Joi.string().required(),
+        server_id: Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required(),
+        section_id: Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required(),
+        channel_id: Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+    });
 const createMessageSchema = Joi.object()
     .options({ abortEarly: false })
     .keys({
@@ -29,3 +43,4 @@ const editMessagesSchema = Joi.object()
 export { createMessageSchema };
 export { findMessagesSchema };
 export { editMessagesSchema };
+export { createServerMessageSchema };

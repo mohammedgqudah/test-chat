@@ -1,5 +1,7 @@
 import Joi from 'joi';
 import { InvalidBody } from '../errors.creator';
+import { SECRET } from '../development';
+
 import {
     createServerSchema,
     createInviteLinkSchema,
@@ -11,7 +13,6 @@ import {
     createInviteLinkToken,
     verifyInviteLinkToken
 } from './servers.service.js';
-import { SECRET } from '../development';
 import Invite from './models/invite.model';
 
 const createChatServer = async (req, res) => {
