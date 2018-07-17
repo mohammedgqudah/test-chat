@@ -1,0 +1,47 @@
+@import '../app/base';
+@keyframes pop {
+    0% {
+        border-radius: 50%;
+    }
+    50% {
+        border-radius: 10%;
+    }
+    100% {
+        border-radius: 20%;
+    }
+}
+.ChatServerNav {
+    background-color: $darker;
+    height: 100%;
+    width: 100%;
+    padding: 10px 0;
+    @extend .AllCenter;
+    align-items: unset;
+    .Item {
+        color: $white !important;
+        text-decoration: none;
+        margin: 10px 0;
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        font-family: 'Roboto';
+        font-size: 1.5rem;
+        font-weight: 400;
+        @extend .AllCenter;
+        &.blue {
+            background-color: $primary;
+        }
+        &:hover {
+            animation: pop 500ms ease-out;
+            border-radius: 20%;
+        }
+        &.ME {
+            background-size: 50%;
+            background-color: transparent;
+            @include BoxShadow(2);
+        }
+    }
+}

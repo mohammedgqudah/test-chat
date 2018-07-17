@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="430 45 15 10">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        opacity: 0.5;
+      }
+    </style>
+  </defs>
+  <path id="ic_expand_more_24px" class="cls-1" d="M19.238,8.59,13.5,14.771,7.763,8.59,6,10.493l7.5,8.1,7.5-8.1Z" transform="translate(424 36.41)"/>
+</svg>

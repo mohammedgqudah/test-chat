@@ -1,0 +1,7 @@
+@import '../app/base';
+.ChatServer {
+    height: 100%;
+    .sections, .users{
+        background-color: $side-color;
+    }
+}

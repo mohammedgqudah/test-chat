@@ -2,30 +2,35 @@ import _c from '../constants';
 import { authenticated, unauthenticated } from '../axios';
 export const LOGIN = (id, password) => {
     return dispatch => {
-        dispatch({ type: constants.LOGIN_START });
-        unauthenticated.post('/login', { id, password }).then(
-            ({ data }) => {
-                if (data.next) {
-                    dispatch({
-                        type: _c.LOGIN_SUCCESS,
-                        payload: { token: data.token }
-                    });
-                } else {
+        dispatch({ type: _c.LOGIN_START });
+        unauthenticated
+            .post('/auth/login', {
+                id,
+                password
+            })
+            .then(
+                ({ data }) => {
+                    if (data.next) {
+                        dispatch({
+                            type: _c.LOGIN_SUCCESS,
+                            payload: { token: data }
+                        });
+                    } else {
+                        console.error(data);
+                        dispatch({
+                            type: _c.LOGIN_ERROR,
+                            payload: { error: data.code }
+                        });
+                    }
+                },
+                error => {
                     console.error(data);
                     dispatch({
                         type: _c.LOGIN_ERROR,
-                        payload: { error: data.error }
+                        payload: { error, server: true }
                     });
                 }
-            },
-            error => {
-                console.error(data);
-                dispatch({
-                    type: _c.LOGIN_ERROR,
-                    payload: { error, server: true }
-                });
-            }
-        );
+            );
     };
 };
 export const SIGNUP = (name, email, password) => {

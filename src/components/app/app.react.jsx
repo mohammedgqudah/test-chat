@@ -15,6 +15,7 @@ import AppMain from '../app-main/app_main.jsx';
 )
 class AppRoot extends Component {
   renderRoute ({history, match}) {
+    window.router = history;
     return (
       <div className="main">
         <AppMain {...this.props}/>
@@ -23,9 +24,9 @@ class AppRoot extends Component {
   }
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename="/app">
         <Switch>
-          <Route exact path="/" render={this.renderRoute}/>
+          <Route path="/" render={this.renderRoute.bind(this)}/>
         </Switch>
       </BrowserRouter>
     )

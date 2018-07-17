@@ -4,9 +4,10 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import authReducer from './reducers/auth.reducer';
 import authActions from './actions/auth.actions';
+import channelReducer from './reducers/channels.reducer';
 import prestate from './prestate';
 
-const reducers = reduceReducers(authReducer);
+const reducers = reduceReducers(authReducer, channelReducer);
 const devTools =
     window.__REDUX_DEVTOOLS_EXTENSION__ ||
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;

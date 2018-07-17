@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "babel-node": "babel-node --presets=env",
-        "start": "nodemon --exec npm run babel-node -- ./server.js",
+        "start": "nodemon --ignore * --exec npm run babel-node -- ./src/server.js",
         "build": "babel src -d dist"
     },
     "author": "",

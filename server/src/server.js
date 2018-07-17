@@ -1,16 +1,16 @@
 import express from 'express';
 import color from 'color';
 import logger from 'morgan';
-import connect from './db';
-import api from './api/index';
+import connect from '../db';
+import api from '../api/index';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import http from 'http';
-import { configJWTStrategy } from './middleware/passport';
+import { configJWTStrategy } from '../middleware/passport';
 import hbs from 'hbs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
-import { SECRET } from './api/development';
+import { SECRET } from '../api/development';
 
 connect();
 const app = express();
@@ -18,7 +18,7 @@ const fileUpload = require('express-fileupload');
 const server = http.Server(app);
 const port = process.env.PORT || 3000;
 app.set('view engine', 'hbs');
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, '../public')));
 app.use('/app', (req, res) => {
     res.render('app.hbs');
 });

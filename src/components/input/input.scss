@@ -4,10 +4,21 @@
     margin-bottom: $input_margin;
     .Input {
         width: 100%;
-        padding: 10px;
+        padding: 15px;
         border: none;
-        border: 1px solid $primary;
-        color: $black;
+        color: $white;
+        background-color: rgba(0, 0, 0, 0.13);
+        border-radius: 3px;
+        font-weight: 400;
+        font-family: 'Roboto';
+        border: 2px solid transparent;
+        transition: all 200ms;
+        &.success {
+            border: 2px solid $success;
+        }
+        &.danger {
+            border: 2px solid $danger;
+        }
     }
     .Error {
         margin: 0;

@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import './form.scss';
 import Button from '../buttons/button.jsx';
 class Form extends Component {
@@ -8,20 +8,25 @@ class Form extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        this.props.onSubmit(e);
+        if (this.props.allowSubmit) this.props.onSubmit(e);
     }
     render() {
-        let { title, children, button } = this.props;
+        let { title, children, allowSubmit } = this.props;
         return (
-            <div className="Form">
-                <div className="Header">
-                    <h3 className="title">{title}</h3>
-                    <form onSubmit={this.onSubmit}>
-                        {children}
-                        <Button name={button} type="submit" />
-                    </form>
-                </div>
+            <div className="Form" style={this.props.style}>
+                <h3 className="title">{title}</h3>
+                <form onSubmit={this.onSubmit}>
+                    {children}
+                    <div style={{ textAlign: 'center' }}>
+                        <Button
+                            name={'login'}
+                            type="submit"
+                            extraClass={!allowSubmit && 'disabled'}
+                        />
+                    </div>
+                </form>
             </div>
         );
     }
 }
+export default Form;

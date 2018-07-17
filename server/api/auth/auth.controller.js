@@ -44,7 +44,7 @@ const login = (req, res) => {
                         }
                     });
                 } else {
-                    res.send({ next: false, code: 'WrongPassord' });
+                    res.send({ next: false, code: 'UserNotFound' });
                 }
             }
         });
