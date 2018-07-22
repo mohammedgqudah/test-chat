@@ -8,14 +8,20 @@ class UserCard extends Component {
         this.card = this.card.bind(this);
         this.state = { open: false };
         let { dispatch, store } = this.props;
-        this.event = () => {
-            this.setState({ open: false });
-        };
         this.AppEmitter = AppEmitter;
-        window.addEventListener('click', this.event);
+        this.event = () => {
+            if (this.state.open) {
+                this.AppEmitter.emit('close_all');
+            }
+        };
+        this.AppEmitter.on('close_all', () => {
+            console.log('closing');
+            this.setState({ open: false });
+        });
+        window.addEventListener('click', this.event, true);
     }
     componentWillUnmount() {
-        window.removeEventListener('click', this.event);
+        window.removeEventListener('click', this.event, true);
     }
     card({ ref, placement, style }) {
         let { user, user_roles } = this.props;
@@ -70,6 +76,7 @@ class UserCard extends Component {
                     {({ ref }) => (
                         <span
                             onClick={event => {
+                                this.AppEmitter.emit('close_all');
                                 this.setState({ open: !state.open });
                                 event.stopPropagation();
                             }}
