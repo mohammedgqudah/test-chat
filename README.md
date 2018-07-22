@@ -35,7 +35,7 @@ create a database at mlab.com and deploy using e.g heroku
 -   [react-popper](https://github.com/FezVrasta/react-popper) - popper.js with react used for users cards
 -   [marked](https://github.com/markedjs/marked) - the markdown parser
 -   [moment](https://momentjs.com/) - Parse, validate, manipulate, and display dates
--   [axios](https://github.com/axios/axios) - Parse, validate, manipulate, and display dates
+-   [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 -   [redux thunk](https://github.com/reduxjs/redux-thunk) - a middleware for async actions with redux
 
 ## Contributing
