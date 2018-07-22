@@ -1,0 +1,59 @@
+$header-height: 7%;
+$messages-height: 83%;
+$footer-height: 100% - $messages-height;
+@import '../app/base';
+.ChatBox {
+    .header {
+        height: $header-height;
+        background-color: $center-color;
+        // @include BoxShadow(1);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        @extend .AllCenter;
+        justify-content: flex-start;
+        padding-left: 10px;
+        .name {
+            font-family: 'Roboto';
+            font-size: 1rem;
+        }
+    }
+    height: 100%;
+    width: 100%;
+    background-color: $center-color;
+    color: $white;
+    max-height: 100%;
+    overflow: hidden;
+    .Messages {
+        box-sizing: border-box;
+        height: $messages-height;
+        max-height: $messages-height;
+    }
+    .ChatFooter {
+        height: $footer-height;
+        max-height: $footer-height;
+        position: relative;
+        @extend .AllCenter;
+        &::before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            width: 95%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1px;
+            background-color: rgb(187, 182, 182);
+            opacity: 0.1;
+        }
+    }
+}
+
+.TEST {
+    & > div:nth-child(3) {
+        background-color: rgba(0,0,0,0.12);
+        & >div {
+            border-top: 6px solid $center-color;
+            border-radius: 10px;
+            border-bottom: 6px solid $center-color;
+        }
+    }
+}

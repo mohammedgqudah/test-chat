@@ -12,17 +12,17 @@
 }
 .ChatServerNav {
     background-color: $darker;
-    height: 100%;
     width: 100%;
     padding: 10px 0;
+    min-height: 100%;
     @extend .AllCenter;
     align-items: unset;
     .Item {
         color: $white !important;
         text-decoration: none;
         margin: 10px 0;
-        height: 60px;
-        width: 60px;
+        height: 50px;
+        width: 50px;
         border-radius: 50%;
         background-size: cover;
         background-repeat: no-repeat;
@@ -31,10 +31,32 @@
         font-size: 1.5rem;
         font-weight: 400;
         @extend .AllCenter;
+        position: relative;
+        &::before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: -15px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            height: 0;
+            background-color: rgb(212, 211, 211);
+            width: 5px;
+            transition: all 100ms ease-out;
+        }
+        &.active {
+            &::before {
+                height: 60%;
+                transform: translateY(-50%) translateX(0);
+            }
+            border-radius: 20%;
+        }
         &.blue {
             background-color: $primary;
         }
-        &:hover {
+        &:hover:not(.add-server):not(.active) {
             animation: pop 500ms ease-out;
             border-radius: 20%;
         }
@@ -42,6 +64,15 @@
             background-size: 50%;
             background-color: transparent;
             @include BoxShadow(2);
+        }
+        &.add-server {
+            background-color: transparent;
+            border: 1px dashed $white;
+            color: $white;
+            opacity: .5;
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }

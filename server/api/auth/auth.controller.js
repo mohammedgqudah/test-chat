@@ -23,31 +23,37 @@ const login = (req, res) => {
     } else {
         User.findOne({
             $or: [{ email: req.body.id }, { name: req.body.id }]
-        }).then(user => {
-            if (!user) {
-                res.send({
-                    next: false,
-                    code: 'UserNotFound'
-                });
-            } else {
-                let compared = comparePassword(
-                    req.body.password,
-                    user.password
-                );
-                if (compared) {
+        }).then(
+            user => {
+                if (!user) {
                     res.send({
-                        next: true,
-                        token: token({ id: user._id }, TOKEN_EXPIRY_DATE),
-                        user: {
-                            ...user._doc,
-                            ...userExclude
-                        }
+                        next: false,
+                        code: 'UserNotFound'
                     });
                 } else {
-                    res.send({ next: false, code: 'UserNotFound' });
+                    let compared = comparePassword(
+                        req.body.password,
+                        user.password
+                    );
+                    if (compared) {
+                        res.send({
+                            next: true,
+                            token: token({ id: user._id }, TOKEN_EXPIRY_DATE),
+                            user: {
+                                ...user._doc,
+                                ...userExclude
+                            }
+                        });
+                    } else {
+                        res.send({ next: false, code: 'UserNotFound' });
+                    }
                 }
+            },
+            error => {
+                console.log(error);
+                res.send({ next: false, server: true, error });
             }
-        });
+        );
     }
 };
 const signup = (req, res) => {
@@ -70,12 +76,15 @@ const signup = (req, res) => {
     } else {
         User.create({ name, password: hashPassword(password), email })
             .then(user => {
-                return userInvalidRequests.create({user: user._id, tags: []}).then(() => {
-                    res.send({
-                        next: true,
-                        token: token({ id: user._id }, TOKEN_EXPIRY_DATE)
+                return userInvalidRequests
+                    .create({ user: user._id, tags: [] })
+                    .then(() => {
+                        res.send({
+                            next: true,
+                            token: token({ id: user._id }, TOKEN_EXPIRY_DATE),
+                            user
+                        });
                     });
-                })
             })
             .catch(error => {
                 if (error.name === 'ValidationError') {

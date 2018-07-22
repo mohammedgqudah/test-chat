@@ -34,6 +34,12 @@ app.use((req, res, next) => {
 app.use(passport.initialize()); // req.user
 configJWTStrategy();
 app.use('/api', api);
+app.get('/emote/64/:name', (req, res) => {
+    let { name } = req.params;
+    res.redirect(
+        `https://abs.twimg.com/emoji/v2/svg/${name.replace('.png', '')}.svg`
+    );
+});
 // === === SOCKET IO === === ===
 const io = require('socket.io')(server);
 io.use(function(socket, next) {

@@ -1,0 +1,33 @@
+@import '../app/base';
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+.Modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    height: 40%;
+    width: 40%;
+    background-color: $center-color;
+    z-index: 15;
+    @include BoxShadow(4);
+    border-radius: 3px;
+    color: $white;
+    .header {
+        font-family: 'Roboto';
+        font-weight: 200;
+        font-size: 1.3rem;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .disabled {
+        opacity: .7;
+    }
+}

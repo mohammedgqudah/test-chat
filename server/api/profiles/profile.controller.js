@@ -4,8 +4,8 @@ import { SECRET } from '../development';
 import fs from 'fs';
 import User from '../auth/models/user.model';
 const changeAvatar = async (req, res) => {
-    let filename = req.user.avatar.replace('/static/img/', '');
-    let imgPath = __dirname + '../../../public/img/';
+    let filename = req.user.avatar.replace('/static/img/avatars/', '');
+    let imgPath = __dirname + '../../../public/img/avatars/';
     try {
         if (!req.files || !req.files.avatar)
             return res.send({ next: false, code: 'InvalidData' });
@@ -20,7 +20,7 @@ const changeAvatar = async (req, res) => {
             { _id: req.user._id },
             {
                 avatar:
-                    '/static/img/' +
+                    '/static/img/avatars/' +
                     filename.replace(/\.\w+$/, avatar.name.match(/\.\w+$/)[0])
             }
         );

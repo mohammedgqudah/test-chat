@@ -1,7 +1,22 @@
 @import '../app/base';
 .ChatServer {
     height: 100%;
+    .main {
+        padding: 0;
+    }
     .sections, .users{
         background-color: $side-color;
     }
+    .sections {
+        .settings {
+            height: 7%;
+        }
+        .sections-list {
+            height: 90%;
+        }
+    }
+    .users {
+        padding-top: 10px;
+    }
+   
 }

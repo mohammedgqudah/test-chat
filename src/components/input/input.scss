@@ -1,5 +1,5 @@
 @import '../app/base';
-.InputGroup {
+body .InputGroup {
     width: 100%;
     margin-bottom: $input_margin;
     .Input {
@@ -7,12 +7,13 @@
         padding: 15px;
         border: none;
         color: $white;
-        background-color: rgba(0, 0, 0, 0.13);
+        background-color: rgba(0, 0, 0, 0.13) !important;
         border-radius: 3px;
         font-weight: 400;
         font-family: 'Roboto';
         border: 2px solid transparent;
         transition: all 200ms;
+        outline: none !important;
         &.success {
             border: 2px solid $success;
         }

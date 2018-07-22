@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import MBUV from 'mongoose-beautiful-unique-validation';
 
 const ChannelSchema = new mongoose.Schema({
     name: String,
@@ -9,7 +8,7 @@ const ChannelSchema = new mongoose.Schema({
     }
 });
 const SectionSchema = new mongoose.Schema({
-    name: { type: String },
+    name: { type: String, unique: false },
     channels: [ChannelSchema]
 });
 const ServerSchema = new mongoose.Schema({
@@ -21,10 +20,14 @@ const ServerSchema = new mongoose.Schema({
     sections: [SectionSchema],
     users: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            roles: [{ name: String }]
         }
-    ]
+    ],
+    roles: [{ name: String, is_admin: { type: Boolean, default: false } }]
 });
 const ChatServer = mongoose.model('ChatServer', ServerSchema);
 

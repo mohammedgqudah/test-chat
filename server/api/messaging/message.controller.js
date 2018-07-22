@@ -47,7 +47,7 @@ const createServerMessage = async (req, res) => {
     try {
         let server = await ChatServer.findOne({
             _id: server_id,
-            users: { $in: req.user._id }
+            'users.user': { $in: req.user._id }
         });
         if (!server) return res.send({ next: false, code: 'ServerNotFound' });
         let message = await Message.create({

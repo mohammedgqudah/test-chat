@@ -1,0 +1,13 @@
+@import '../app/base';
+.server-settings-component {
+    // background-color: $center-color;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    @extend .AllCenter;
+    .title {
+        font-family: 'Roboto';
+        font-weight: 400;
+        color: $white;
+        font-size: 1rem;
+    }
+}

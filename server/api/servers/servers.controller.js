@@ -25,13 +25,13 @@ const createChatServer = async (req, res) => {
         let server = await ChatServer.create({
             name,
             king: _id,
-            users: [_id],
+            users: [{ user: _id }],
             sections: [
                 { name: 'text channels', channels: [{ name: 'general' }] }
             ]
         });
         server = await ChatServer.populate(server, {
-            path: 'king users',
+            path: 'king users.user',
             select: '-_id -__v -password'
         });
         res.send({ next: true, server });
@@ -70,8 +70,8 @@ const invite = async (req, res) => {
         const invite = await Invite.findOne({ token });
         if (!invite) return res.send({ next: false, code: 'InvalidInvite' });
         const server = await ChatServer.findOneAndUpdate(
-            { _id: invite.server, users: { $ne: req.user._id } },
-            { $push: { users: req.user._id } }
+            { _id: invite.server, 'users.user': { $ne: req.user._id } },
+            { $push: { users: { user: req.user._id, roles: [] } } }
         );
         if (!server) return res.send({ next: false, code: 'UserAlreadyIn' });
         res.send({ next: true });
@@ -82,9 +82,10 @@ const invite = async (req, res) => {
 };
 const getChatServers = async (req, res) => {
     try {
+        console.log(req.user._id);
         const servers = await ChatServer.find({
-            users: { $in: [req.user._id] }
-        }).populate({ path: 'king users', select: '-_id -__v -password' });
+            'users.user': { $in: [req.user._id] }
+        }).populate({ path: 'users.user', select: '-__v -password' });
         res.send({ next: true, servers });
     } catch (error) {
         console.log(error);

@@ -13,6 +13,19 @@
         color: #95989a;
         text-transform: uppercase;
         font-size: 0.9rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        user-select: none;
+        &:hover {
+            svg {
+                opacity: 1;
+            }
+        }
+        svg {
+            opacity: 0;
+            cursor: pointer;
+        }
     }
     .section-channel {
         text-decoration: none;
@@ -24,6 +37,7 @@
         font-weight: bold;
         color: #95989a;
         border-radius: 3px;
+        transition: all 200ms;
         &.idx0 {
             margin-top: 1px;
         }
@@ -33,6 +47,9 @@
         &.active {
             background-color: rgba(0, 0, 0, 0.13);
             color: $white;
+        }
+        &.fold {
+            display: none;
         }
     }
 }

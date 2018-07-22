@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import MBUV from 'mongoose-beautiful-unique-validation';
-const jdenticon = require("jdenticon");
+// const jdenticon = require("jdenticon");
+var identicon = require('identicon');
 import fs from 'fs';
 const UserSchema = new mongoose.Schema({
     name: {
@@ -31,17 +32,18 @@ const UserSchema = new mongoose.Schema({
     }
 });
 UserSchema.pre('save', function (next) {
-    const ID = () => {
+    const make_id = () => {
         let text = '';
-        const possible = "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const possible = this._id.toString();
         for (var i = 0; i < 10; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         return text;
     };
-    let id = ID();
-    let png = jdenticon.toPng(this._id.toString(), 200);
-    fs.writeFileSync(`${__dirname}/../../../public/img/${id}.png`, png);
-    this.avatar = '/static/img/' + id + '.png';
+    let id = make_id();
+    console.log(id);
+    let png = identicon.generateSync({ id: id, size: 200 });
+    fs.writeFileSync(`${__dirname}/../../../public/img/avatars/${id}.png`, png);
+    this.avatar = '/static/img/avatars/' + id + '.png';
     next()
 });
 UserSchema.plugin(MBUV);

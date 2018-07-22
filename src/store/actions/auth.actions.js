@@ -13,7 +13,7 @@ export const LOGIN = (id, password) => {
                     if (data.next) {
                         dispatch({
                             type: _c.LOGIN_SUCCESS,
-                            payload: { token: data }
+                            payload: { token: data.token, user: data.user }
                         });
                     } else {
                         console.error(data);

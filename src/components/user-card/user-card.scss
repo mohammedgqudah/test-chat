@@ -1,0 +1,64 @@
+@import '../app/base';
+@keyframes slideLeft {
+    from {
+        transform: translateX(20px) translate3d(-235px, 5px, 0px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) translate3d(-235px, 5px, 0px);
+        opacity: 1;
+    }
+}
+.card {
+    color: $white;
+    border-radius: 4px;
+    background-color: $darker;
+    min-height: 300px;
+    min-width: 250px;
+    // animation: slideLeft 200ms ease;
+    z-index: 5;
+    .section-1 {
+        @extend .AllCenter;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        .in {
+            flex-direction: column;
+            @extend .AllCenter;
+            justify-content: space-between;
+        }
+        .user-profile {
+            border-radius: 50%;
+            height: 70px;
+            width: 70px;
+            display: inline-block;
+        }
+        p {
+            text-align: center;
+            font-weight: 500;
+            font-family: 'Roboto', sans-serif;
+            .fade {
+                color: gray;
+            }
+        }
+    }
+    .section-2 {
+        padding: 3px 0;
+        .role {
+            border: 1px solid transparent;
+            position: relative;
+            border-radius: 300px;
+            padding: 2px 8px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-family: 'Roboto';
+            font-weight: 600;
+            margin: 5px;
+            user-select: none;
+            .circle {
+                width: 5px;
+                height: 5px;
+                margin-right: 5px;
+            }
+        }
+    }
+}
