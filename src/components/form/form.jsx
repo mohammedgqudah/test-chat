@@ -13,7 +13,7 @@ class Form extends Component {
     render() {
         let { title, children, allowSubmit } = this.props;
         return (
-            <div className="Form" style={this.props.style}>
+            <div className={"Form " + this.props.className} style={this.props.style}>
                 <h3 className="title">{title}</h3>
                 <form onSubmit={this.onSubmit}>
                     {children}

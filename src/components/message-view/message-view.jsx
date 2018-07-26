@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import './message-view.scss';
-import shortNameToImage from '../EmojiParser/EmojiParser';
+import shortNameToImage, { List } from '../EmojiParser/EmojiParser';
 import moment from 'moment';
 import marked from 'marked';
 import UserCard from '../user-card/user-card.jsx';
-
+import './theme-dark-code.scss';
+import Prism from 'prismjs';
+import { Markdown } from 'react-custom-markdown';
+import 'react-tippy/dist/tippy.css';
+import { Tooltip } from 'react-tippy';
 class MessageView extends Component {
     constructor(props) {
         super(props);
-        this.message = this.message.bind(this);
+        this.rules = this.rules.bind(this);
+        this.renderer = this.renderer.bind(this);
+        this.check_role = this.check_role.bind(this);
+        this.check_user = this.check_user.bind(this);
+        this.getUser = this.getUser.bind(this);
     }
     componentDidMount() {
         let con = document.querySelector('#MessagesList > div');
@@ -16,24 +24,81 @@ class MessageView extends Component {
         con.scrollTop =
             con.offsetHeight + this.ref.offsetHeight + con.scrollHeight;
     }
-    message() {
-        let { message, roles } = this.props;
-        let content = message.content
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-        return shortNameToImage(marked(content)).replace(/@\w+/g, $ => {
-            $ = $.replace('@', '');
-            if (roles.find(r => r.name == $)) {
-                return `<span class="tag">@${$}</span>`;
+    rules() {
+        return [
+            { name: 'role_mention', regexp: /@([\s\S]+?)\./ },
+            { name: 'emoji', regexp: /:([\s\S]+?):/ },
+            { name: 'link', regexp: /-([\s\S]+?)-/ }
+        ];
+    }
+    check_role(role) {
+        let { roles } = this.props;
+        return roles.map(r => r.name).includes(role);
+    }
+    check_user(name) {
+        let { users } = this.props;
+        return users.map(u => u.user.name).includes(name);
+    }
+    getUser(name) {
+        let { users } = this.props;
+        return users.find(u => u.user.name == name);
+    }
+    renderer({ rule, content }, props) {
+        switch (rule) {
+            case 'role_mention': {
+                if (this.check_role(content)) {
+                    return <span className="role">@{content}</span>;
+                } else if (this.check_user(content)) {
+                    let user = this.getUser(content);
+                    return (
+                        <UserCard
+                            user={user.user}
+                            user_roles={[]}
+                            {...this.props}
+                            pos="top"
+                        >
+                            <span className="mention user">@{content}</span>
+                        </UserCard>
+                    );
+                } else return <span className="wrong_mention">@{content}</span>;
+                break;
             }
-            return `@${$}`;
-        });
+            case 'emoji': {
+                content = ':' + content + ':';
+                if (List[content])
+                    return (
+                        <Tooltip
+                            // options
+                            title={content}
+                            position="top"
+                            trigger="mouseenter"
+                            animation="perspective"
+                            arrow={true}
+                        >
+                            <img
+                                alt={content}
+                                class="emoji"
+                                src={`https://abs.twimg.com/emoji/v2/svg/${
+                                    List[content].uc_base
+                                }.svg`}
+                            />
+                        </Tooltip>
+                    );
+                return <span className="string">{content}</span>;
+                break;
+            }
+            case 'link': {
+                return (
+                    <a href={content} target="_blank">
+                        link
+                    </a>
+                );
+                break;
+            }
+        }
     }
     render() {
-        let { message, store, server} = this.props;
+        let { message, store, server } = this.props;
         return (
             <div
                 className={'MessageView ' + (message.fake && 'fake')}
@@ -61,10 +126,14 @@ class MessageView extends Component {
                     </span>
                 </div>
                 <div className="message-body">
-                    <p
-                        className="text"
-                        dangerouslySetInnerHTML={{ __html: this.message() }}
-                    />
+                    <p className="text">
+                        <Markdown
+                            customRules={this.rules()}
+                            customElementsRenderer={this.renderer}
+                        >
+                            {message.content}
+                        </Markdown>
+                    </p>
                 </div>
             </div>
         );

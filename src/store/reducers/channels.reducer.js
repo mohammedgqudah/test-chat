@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default (state, { type, payload }) => {
     let state_servers = state.servers;
     switch (type) {
@@ -37,6 +39,48 @@ export default (state, { type, payload }) => {
                 }
             };
         }
+        case 'SET_CREATE_CHANNEL': {
+            return {
+                ...state,
+                add_channel_section_id: payload
+            };
+        }
+        case 'ADD_CHANNEL': {
+            // ...state.servers,
+            //         [payload.server_id]: {
+            //             ...server,
+            //             sections
+            //         }
+            let server = state.servers.find(s => s._id == payload.server_id);
+            let sections = server.sections;
+            sections = sections.map(section => {
+                if (section._id == payload.section_id) {
+                    let channels = section.channels;
+                    channels.push(payload.channel);
+                    section.channels = _.uniqBy(channels, '_id');
+                    return section;
+                } else {
+                    return section;
+                }
+            });
+            let servers = state.servers.map(s => {
+                if (s._id == payload.server_id) {
+                    s.sections = sections;
+                }
+                return s;
+            });
+            return {
+                ...state,
+                servers,
+                add_channel_section_id: 0
+            };
+        }
+        case "SET_CREATE_SECTION": {
+            return {
+                ...state,
+                show_create_section: payload
+            }
+        } 
     }
     return { ...state };
 };

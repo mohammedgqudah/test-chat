@@ -1,0 +1,55 @@
+@import '../app/base';
+.DMList {
+    .title {
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        color: gray;
+        margin-left: 7px;
+        margin-bottom: 10px;
+    }
+    height: 100%;
+    .header-search {
+        height: 7%;
+        @include BoxShadow(1);
+    }
+    .dm-users-list {
+        height: 100% - 7% - 7%;
+        padding: 15px 10px;
+        .dm-conversation-link {
+            color: $white;
+            text-decoration: none;
+            padding: 7px 7px;
+            display: grid;
+            grid-template-columns: 20% 80%;
+            border-radius: 3px;
+            .user-picture {
+                border-radius: 50%;
+                height: 25px;
+                width: 25px;
+            }
+            .name {
+                font-family: 'Roboto';
+                font-weight: 500;
+                color: gray;
+                margin-left: 10px;
+            }
+            &.idx0 {
+                margin-top: 10px;
+            }
+            &:hover {
+                background-color: rgba(223, 209, 209, 0.055);
+            }
+            &.active {
+                background-color: rgba(223, 209, 209, 0.11);
+                .name {
+                    color: $white;
+                }
+            }
+        }
+    }
+    .user-info-con {
+        height: 7%;
+    }
+}

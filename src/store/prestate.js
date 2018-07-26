@@ -14,8 +14,12 @@ export default {
     show_add_server: false,
     add_channel_section_id: 0,
     card_event: true,
+    dm: {
+        dm_messages: {},
+        dm_loaded: {}
+    },
     data: {},
-    // if 3 the app will load because we need to load
-    // 1- servers and 2- conversations and 3- pending requests
+    // if 2 the app will load because we need to load
+    // 1- servers and 2- conversations
     load_app: 0
 };

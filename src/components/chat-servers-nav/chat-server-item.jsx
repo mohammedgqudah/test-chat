@@ -16,15 +16,6 @@ class Item extends Component {
         if (store.servers_last_link[_id]) {
             section_id = store.servers_last_link[_id].section_id;
             channel_id = store.servers_last_link[_id].channel_id;
-        } else {
-            dispatch({
-                type: 'ACTIVATE_CHANNEL',
-                payload: {
-                    server_id: _id,
-                    section_id,
-                    channel_id
-                }
-            });
         }
         let section = server.sections[0];
         return (
@@ -48,7 +39,7 @@ class ME extends Component {
         return (
             <Link
                 className={'Item blue ME'}
-                style={{ backgroundImage: `url('/static/img/friends.svg')` }}
+                style={{ backgroundImage: `url('/static/img/app_logo.png')`, backgroundSize: '70%'}}
                 to={`/@me`}
             />
         );

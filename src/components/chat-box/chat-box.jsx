@@ -13,7 +13,9 @@ class ChatBox extends Component {
         this.setState({ messageBoxValue: value });
     }
     onKeyPress(evt) {
-        if (evt.which == 13 && !evt.shiftKey) {
+        if (evt.which === 13 && evt.shiftKey) {
+            //
+        } else if (evt.which === 13) {
             evt.preventDefault();
             let message = this.state.messageBoxValue;
             this.setState({ messageBoxValue: '' });
@@ -25,7 +27,7 @@ class ChatBox extends Component {
         // console.log(a, b);
     }
     render() {
-        let { messages, children } = this.props;
+        let { messages, children, welcome } = this.props;
         let { messageBoxValue } = this.state;
         return (
             <div className="ChatBox">
@@ -37,6 +39,7 @@ class ChatBox extends Component {
                         className="TEST"
                         id="ID"
                     >
+                        <h3 className="welcome">{welcome}</h3>
                         {messages.map(m => {
                             return (
                                 <MessageView

@@ -8,6 +8,10 @@ html {
 html,body{
     margin: 0;
     padding: 0;
+    background-color: $center-color;
+}
+body {
+    overflow: hidden;
 }
 * {
     box-sizing: border-box !important;
@@ -28,4 +32,7 @@ html,body{
 }
 .success-text {
     color: $success;
+}
+a {
+    color: #e6d8d8
 }

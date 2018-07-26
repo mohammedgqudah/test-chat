@@ -1,0 +1,32 @@
+@import '../app/base';
+
+.UserInfo {
+    height: 100%;
+    background-color: rgba(0,0,0,0.13);
+    @extend .AllCenter;
+    justify-content: space-between;
+    padding: 0 10px;
+    color: $white;
+    .user-img {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+    .user-name {
+        color: $white;
+        font-family: 'Roboto';
+        font-weight: 500;
+        margin-left: 4px;
+        font-size: .8rem;
+    }
+    .user {
+        @extend .AllCenter;
+    }
+    .settings-icons {
+        @extend .AllCenter;
+        justify-content: unset;
+        .icon {
+            margin: 0 2px;
+        }
+    }
+}

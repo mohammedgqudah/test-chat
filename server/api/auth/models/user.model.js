@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
     },
     tag: {
         type: Number,
-        default: () => Math.floor(Math.random() * 9999)
+        default: () => Math.floor(Math.random() * 99999999).toString().substr(0,4)
     }
 });
 UserSchema.pre('save', function (next) {

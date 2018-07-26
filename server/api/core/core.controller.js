@@ -147,7 +147,7 @@ const pendingRequests = async (req, res) => {
     const { _id } = req.user;
     const pending_requests = await PendingRequest.find({
         $or: [{ from: _id }, { to: _id }]
-    }).populate({path: 'from to', select: '-_id -password -__v '})
+    }).populate({ path: 'from to', select: '-_id -password -__v ' });
     res.send({
         next: true,
         pending_requests
@@ -157,7 +157,7 @@ const conversations = async (req, res) => {
     const { _id } = req.user;
     let conversations_list = await Conversation.find({
         $or: [{ user1: _id }, { user2: _id }]
-    }).populate({path: 'user1 user2', select: '-_id -password -__v '})
+    }).populate({ path: 'user1 user2', select: '-password -__v ' });
     res.send({
         next: true,
         conversations: conversations_list

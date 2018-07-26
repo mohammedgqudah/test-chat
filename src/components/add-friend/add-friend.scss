@@ -1,0 +1,11 @@
+@import '../app/base';
+
+.AddFriend {
+    height: 100%;
+    @extend .AllCenter;
+    .disabled {
+        opacity: 1;
+        filter:none;
+        background-color: gray;
+}
+}

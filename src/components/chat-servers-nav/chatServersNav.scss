@@ -62,8 +62,7 @@
         }
         &.ME {
             background-size: 50%;
-            background-color: transparent;
-            @include BoxShadow(2);
+            background-color: $side-color;
         }
         &.add-server {
             background-color: transparent;
@@ -75,4 +74,8 @@
             }
         }
     }
+}
+
+.margin-left {
+    margin-left: 20px;
 }

@@ -3,6 +3,7 @@ import './MessageBox.scss';
 import EmojiPicker from 'emoji-picker-react';
 const { Textcomplete, Textarea } = require('textcomplete');
 import EmojiParser, { shortNames as emojies } from '../EmojiParser/EmojiParser';
+import $ from 'jquery';
 
 String.prototype.splice = function(idx, rem, str) {
     return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
@@ -14,7 +15,16 @@ emojies2.forEach((emoji, idx) => {
 emojies2.filter(emoji => {
     return !emoji.includes('tone');
 });
-console.log(emojies2);
+function getOffsetLeft(elem) {
+    var offsetLeft = 0;
+    do {
+        if (!isNaN(elem.offsetLeft)) {
+            offsetLeft += elem.offsetLeft;
+        }
+    } while ((elem = elem.offsetParent));
+    return offsetLeft;
+}
+let listened = false;
 export default class MessageBox extends Component {
     constructor(props) {
         super(props);
@@ -24,14 +34,53 @@ export default class MessageBox extends Component {
         this.state = {
             emoji: false,
             emoteAT: 0,
-            message: props.value
+            message: props.value,
+            emoji_placeholders: [
+                '/emote/64/1f607.png',
+                '/emote/64/1f60c.png',
+                '/emote/64/1f60b.png',
+                '/emote/64/1f605.png'
+            ],
+            emoji_link: '/emote/64/1f60b.png',
+            emoji_idx: 0
         };
         this.props.text(this.state.message);
+        this.onMouseOver = this.onMouseOver.bind(this);
+    }
+    onMouseOver() {
+        let { state } = this;
+        let next_link;
+        let idx = state.emoji_idx;
+        idx++;
+        if (idx + 1 > state.emoji_placeholders.length) {
+            idx = 0;
+        }
+        next_link = state.emoji_placeholders[idx];
+        this.setState({ emoji_link: next_link, emoji_idx: idx });
     }
     componentDidMount() {
+        let name = '';
+        var css = `
+        .textcomplete-dropdown {
+            width: ${this.textarea.offsetWidth}px;
+            left: ${this.textarea.getBoundingClientRect().left}px !important;
+            top: ${this.textarea.getBoundingClientRect().top - 20}px !important;
+        }`,
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+        style.type = 'text/css';
+        if (style.styleSheet) {
+            // This is required for IE8 and below.
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
         var editor = new Textarea(this.textarea);
         var textcomplete = new Textcomplete(editor);
-        textcomplete.register([
+        let strategies = [
             {
                 match: /(^|\s):(\w+)$/,
                 search: function(term, callback) {
@@ -51,7 +100,8 @@ export default class MessageBox extends Component {
                     );
                 }
             }
-        ]);
+        ];
+        textcomplete.register(strategies.concat(this.props.strategies || []));
     }
     Drag(evt) {
         console.log(evt);
@@ -79,17 +129,20 @@ export default class MessageBox extends Component {
                 <div className="textarea-con">
                     <textarea
                         ref={r => (this.textarea = r)}
-                        onKeyPress={this.props.onKeyPress}
+                        onKeyPress={e => {
+                            console.log('key press');
+                            this.props.onKeyPress(e);
+                        }}
                         onChange={this.handelTyping}
                         placeholder={this.props.placeholder}
                         value={this.props.value}
-                        onDrop={this.Drag}
                     />
                     <img
-                        src="/static/img/_XTgfmYpMZ.jpg"
+                        src={state.emoji_link}
                         alt=""
+                        onMouseOver={this.onMouseOver}
                         onClick={this.emojiPicker}
-                        className={"trigger " + (state.emoji && 'active')}
+                        className={'trigger ' + (state.emoji && 'active')}
                     />
                     {state.emoji && (
                         <EmojiPicker

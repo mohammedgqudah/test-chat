@@ -17,6 +17,7 @@ class ChatUsersList extends Component {
                                 user={user}
                                 user_roles={roles}
                                 id={_id}
+                                key={_id}
                                 {...this.props}
                             >
                                 <div className="ChatUser">

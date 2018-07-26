@@ -56,3 +56,20 @@ export const CREATE_SERVER = name => {
         );
     };
 };
+export const CREATE_SECTION = (server_id, name) => {
+    return async dispatch => {
+        try {
+            let { data } = await authenticated.post('/server/create-section', { name, server_id});
+            if (data.next) {
+                dispatch({
+                    type: 'ADD_SECTION',
+                    payload: { server_id, section: data.section }
+                });
+            } else {
+                console.error(data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+};

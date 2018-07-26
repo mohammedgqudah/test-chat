@@ -10,7 +10,6 @@
     }
 }
 .MessageBox {
-
     height: 100%;
     box-sizing: border-box;
     padding-top: 10px;
@@ -18,10 +17,17 @@
         position: relative;
         height: 100%;
         textarea {
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            &:focus {
+                border: 1px solid $primary;
+            }
             width: 100%;
             background-color: rgba(0, 0, 0, 0.13);
             border-radius: 2px;
             padding: 5px;
+            padding-right: 20px;
             border: none;
             font-family: 'Roboto';
             font-weight: 400;
@@ -32,8 +38,8 @@
         }
         .trigger {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 5px;
+            right: 16px;
             height: 25px;
             width: 25px;
             border-radius: 50%;
@@ -61,19 +67,34 @@
         margin-right: 10px;
     }
     background-color: $darker;
-    border-radius: 5px;
-    padding: 10px 0;
+    border-radius: 2px;
+    padding: 10px 5px;
     transform: translateY(-100%);
+    margin-bottom: 100px;
     list-style-type: none;
-    padding-left: 0;
+    // @include BoxShadow(1);
+    min-width: 250px;
     li {
+        .emoji {
+            margin-bottom: 0;
+}
+        user-select: none;
+        cursor: pointer;
         font-family: 'Roboto';
         font-weight: 400;
         color: $white;
-        padding: 10px;
-        &:hover:not(:nth-child(1)),
-        &.active:not(:nth-child(1)) {
-            background-color: rgba(0, 0, 0, 0.13);
+        padding: 7px 15px;
+        &:hover:not(:nth-child(1)):not(:last-child),
+        &.active:not(:nth-child(1)):not(:last-child) {
+            background-color: rgba(153, 152, 152, 0.13);
         }
-    }
+        border-radius: 3px    ;
+        -webkit-border-radius: 3px    ;
+        -moz-border-radius: 3px    ;
+        -ms-border-radius: 3px    ;
+        -o-border-radius: 3px    ;
+}
+}
+.emoji {
+    margin: 5px;
 }

@@ -31,10 +31,14 @@ const createMessage = async (req, res) => {
             path: 'user',
             select: '-_id -password -__v'
         });
-        res.send({
+        req.io.to(conversation_id).emit('SERVER_ACTION', {
+            type: 'ADD_DM_MESSAGE',
+            payload: { conversation_id, message, remove: message._id}
+        });
+        return res.send({
             next: true,
             message
-        });
+        }); 
     } catch (error) {
         res.send({ next: false, code: 'ServerError', error: error });
     }
@@ -60,8 +64,15 @@ const createServerMessage = async (req, res) => {
             path: 'user',
             select: '-__v -password -_id'
         });
-        res.send({ next: true, message });
+        // === realtime ===
+        req.io.to(server_id).emit('SERVER_ACTION', {
+            type: 'SEND_MESSAGE',
+            payload: { channel_id, message, exclude: req.user._id}
+        });
+        // === realtime ===
+        return res.send({ next: true, message });
     } catch (error) {
+        console.log(error);
         res.send({ ...ServerError, error });
     }
 };

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 export default (state, { type, payload }) => {
     switch (type) {
         case 'FETCH_SERVER_SUCCESS': {
@@ -35,12 +36,6 @@ export default (state, { type, payload }) => {
             };
             break;
         }
-        case 'DISABLE_CARD_EVENT': {
-            return {
-                ...state,
-                card_event: false
-            };
-        }
         case 'SET_CREATE_SERVER': {
             return {
                 ...state,
@@ -55,12 +50,24 @@ export default (state, { type, payload }) => {
                 show_create_server: false
             };
         }
-        case 'SET_CREATE_CHANNEL': {
+        case 'ADD_SECTION': {
+            let servers = state.servers;
+            let { server_id, section } = payload;
+            servers = servers.map(s => {
+                if (s._id == server_id) {
+                    let sections = s.sections;
+                    sections.push(section);
+                    return { ...s, sections: _.uniqBy(sections, '_id') };
+                } else return s;
+            });
             return {
                 ...state,
-                add_channel_section_id: payload
+                servers,
+                show_create_section: 0
             };
         }
     }
-    return { ...state };
+    return {
+        ...state
+    };
 };

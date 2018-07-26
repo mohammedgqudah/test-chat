@@ -1,13 +1,13 @@
 $header-height: 7%;
-$messages-height: 83%;
-$footer-height: 100% - $messages-height;
+$footer-height: 10%;
+$messages-height: 100% - $footer-height - $header-height;
 @import '../app/base';
 .ChatBox {
     .header {
         height: $header-height;
         background-color: $center-color;
         // @include BoxShadow(1);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         @extend .AllCenter;
         justify-content: flex-start;
         padding-left: 10px;
@@ -31,6 +31,8 @@ $footer-height: 100% - $messages-height;
         height: $footer-height;
         max-height: $footer-height;
         position: relative;
+        box-sizing: unset;
+        border-top: 2px solid $center-color;
         @extend .AllCenter;
         &::before {
             content: '';
@@ -46,14 +48,28 @@ $footer-height: 100% - $messages-height;
         }
     }
 }
-
+.welcome {
+    @extend .AllCenter;
+    align-items: flex-end;
+    padding-left: 10px;
+    color: gray;
+    font-size: 1.7rem;
+    padding: 20px 0;
+    margin: 0;
+    font-family: 'Lato';
+    font-weight: 100;
+    background-image:  url('https://discordapp.com/assets/5eed3f20bc3c75fd5ff63c60df8f679d.png'), url('https://discordapp.com/assets/129bf63f677720a34bc7ffeb74468a0e.png');
+    background-size: 30%;
+    background-position: center bottom, top left;
+    background-repeat: no-repeat;
+}
 .TEST {
     & > div:nth-child(3) {
-        background-color: rgba(0,0,0,0.12);
-        & >div {
-            border-top: 6px solid $center-color;
-            border-radius: 10px;
-            border-bottom: 6px solid $center-color;
-        }
+        background-color: rgba(0, 0, 0, 0.12);
+        // & >div {
+        //     border-top: 6px solid $center-color;
+        //     border-radius: 10px;
+        //     border-bottom: 6px solid $center-color;
+        // }
     }
 }

@@ -41,12 +41,9 @@ export default (state, { type, payload }) => {
             localStorage.setItem('USER_TAG', payload.user.tag);
             localStorage.setItem('USER_EMAIL', payload.user.email);
             localStorage.setItem('USER_AVATAR', payload.user.avatar);
-            setTimeout(() => {
-                window.router.push('/');
-            }, 100);
             return {
                 ...state,
-                auth: { ...auth, user: true, logging_in: false }
+                auth: { ...auth, user: true, logging_in: false, logged_in: true}
             };
             break;
         }

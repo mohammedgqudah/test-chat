@@ -1,11 +1,12 @@
 @import '../app/base';
+$toll-tip: black;
 .MessageView {
     .emoji {
         height: 25px;
         width: 25px;
-        transform: translateY(20%);
+        transform: translateY(35%);
     }
-    padding: 15px;
+    padding: 10px 15px;
     font-family: 'Roboto';
     position: relative;
     &::before {
@@ -17,7 +18,7 @@
         left: 50%;
         transform: translateX(-50%);
         height: 1px;
-        background-color: rgb(97, 94, 94);
+        background-color: #615e5e;
         opacity: 0.3;
     }
     &.fake {
@@ -29,7 +30,7 @@
         justify-content: unset;
         .user-profile-picture {
             &:hover {
-                opacity: .4;
+                opacity: 0.4;
             }
             height: 40px;
             width: 40px;
@@ -37,8 +38,8 @@
         }
         .info {
             font-size: 1rem;
-            font-family: 'Lato';
-            font-weight: 400;
+            font-family: 'Roboto';
+            font-weight: 500;
             margin-left: 8px;
             color: rgb(241, 239, 239);
             .info-2 {
@@ -53,14 +54,17 @@
     }
     .message-body {
         padding: 5px 0;
-        padding-left: 45px;
+        padding-left: 47px;
+        transform: translateY(-10px);
+        padding-right: 50px;
         p {
             margin: 0;
         }
         .text {
             font-weight: 400;
             line-height: 25px;
-            .tag {
+            .role,
+            .mention {
                 padding: 1;
                 background-color: rgba(115, 139, 215, 0.1);
                 color: #7289da;
@@ -72,6 +76,37 @@
                     background-color: rgba(166, 183, 240, 0.815);
                 }
             }
+            code {
+                padding: 3px;
+                background-color: $darker;
+                border-radius: 3px;
+                margin-top: 5px;
+                font-size: 0.7rem;
+                border: 2px solid $darker;
+            }
+            pre {
+                margin: 0;
+                padding: 0;
+            }
+            pre code {
+                padding-top: 5px;
+                padding-left: 5px;
+                box-sizing: border-box;
+                background-color: $side-color;
+                border-radius: 3px;
+                margin-top: 10px;
+                font-size: 1rem;
+                border: 2px solid $darker;
+                display: block;
+            }
+        }
+    }
+}
+.tippy-popper {
+    .tippy-tooltip {
+        background-color: $toll-tip !important;
+        .arrow-regular {
+            border-top-color: $toll-tip !important;
         }
     }
 }

@@ -108,7 +108,9 @@ const createSection = async (req, res) => {
             { new: true }
         );
         if (!server) return res.send({ next: false, code: 'InvalidData' });
-        res.send({ next: true, server });
+        let section = server.sections[server.sections.length - 1];
+        req.io.to(server_id).emit('SERVER_ACTION', {type: 'ADD_SECTION', payload: {server_id, section}});
+        return res.send({ next: true, section });
     } catch (error) {
         console.log(error);
         res.send({ next: false, code: 'ServerError', error });
@@ -120,15 +122,20 @@ const createChannel = async (req, res) => {
     if (error) return res.send({ ...InvalidBody, error });
     const { name, server_id, section_id } = req.body;
     try {
-        const server = await ChatServer.findOne({ _id: server_id });
+        let server = await ChatServer.findOne({ _id: server_id });
         if (!server) return res.send({ next: false, code: 'ServerNotFound' });
         const section = server.sections.find(
             section => section._id == section_id
         );
         if (!section) return res.send({ next: false, code: 'SectionNotFound' });
         section.channels.push({ name });
-        await server.save();
-        res.send({ next: true });
+        server = await server.save();
+        let channel = section.channels[section.channels.length - 1];
+        req.io.to(server_id).emit('SERVER_ACTION', {
+            type: 'ADD_CHANNEL',
+            payload: { server_id, section_id, channel }
+        });
+        return res.send({ next: true, channel });
     } catch (error) {
         console.log(error);
         res.send({ next: false, code: 'ServerError', error });

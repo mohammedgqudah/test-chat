@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './ChatMain.scss';
 import ChatServerNav from '../chat-servers-nav/chatServersNav.jsx';
-import { Route } from 'react-router-dom';
+import { Route, Redirect} from 'react-router-dom';
 import ChatServer from '../chat-server/chat-server.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
+import DMInterface from '../dm-interface/dm-interface.jsx';
 class ChatMain extends Component {
     render() {
         return (
@@ -30,6 +31,10 @@ class ChatMain extends Component {
                             />
                         )}
                     />
+                    <Route exact path="/" render={() => <Redirect to="/@me" push/>}/>
+                    <Route path="/@me" render={({match, history}) => {
+                        return <DMInterface {...this.props} />
+                    }}/>
                 </div>
             </div>
         );

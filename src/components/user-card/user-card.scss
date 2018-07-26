@@ -1,11 +1,9 @@
 @import '../app/base';
 @keyframes slideLeft {
     from {
-        transform: translateX(20px) translate3d(-235px, 5px, 0px);
         opacity: 0;
     }
     to {
-        transform: translateX(0) translate3d(-235px, 5px, 0px);
         opacity: 1;
     }
 }
@@ -15,8 +13,9 @@
     background-color: $darker;
     min-height: 300px;
     min-width: 250px;
-    // animation: slideLeft 200ms ease;
-    z-index: 5;
+    animation: slideLeft 200ms ease;
+    z-index: 10;
+    transform-style: flat;
     .section-1 {
         @extend .AllCenter;
         background-color: rgba(0, 0, 0, 0.3);

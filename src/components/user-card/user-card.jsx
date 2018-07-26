@@ -24,7 +24,7 @@ class UserCard extends Component {
         window.removeEventListener('click', this.event, true);
     }
     card({ ref, placement, style }) {
-        let { user, user_roles } = this.props;
+        let { user, user_roles, pos} = this.props;
         return (
             <div
                 className="card"
@@ -49,7 +49,7 @@ class UserCard extends Component {
                 <div className="section-2">
                     {user_roles.map(role => (
                         <span
-                            key={role._id}
+                            key={role.name}
                             className="role"
                             style={{
                                 borderColor: role.color,
@@ -68,7 +68,7 @@ class UserCard extends Component {
         );
     }
     render() {
-        let { id, dispatch, store } = this.props;
+        let { id, dispatch, store, pos} = this.props;
         let { state } = this;
         return (
             <Manager>
@@ -78,7 +78,6 @@ class UserCard extends Component {
                             onClick={event => {
                                 this.AppEmitter.emit('close_all');
                                 this.setState({ open: !state.open });
-                                event.stopPropagation();
                             }}
                             ref={ref}
                         >
@@ -86,7 +85,7 @@ class UserCard extends Component {
                         </span>
                     )}
                 </Reference>
-                <Popper placement="left">
+                <Popper placement={pos || "left"}>
                     {({ ref, style, placement, arrowProps }) =>
                         state.open && this.card({ ref, placement, style })
                     }

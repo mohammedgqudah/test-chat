@@ -27,12 +27,13 @@ app.use(logger('dev'));
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize()); // req.user
+configJWTStrategy();
+const io = require('socket.io')(server);
 app.use((req, res, next) => {
     req.io = io;
     next();
 });
-app.use(passport.initialize()); // req.user
-configJWTStrategy();
 app.use('/api', api);
 app.get('/emote/64/:name', (req, res) => {
     let { name } = req.params;
@@ -41,28 +42,18 @@ app.get('/emote/64/:name', (req, res) => {
     );
 });
 // === === SOCKET IO === === ===
-const io = require('socket.io')(server);
-io.use(function(socket, next) {
-    if (socket.handshake.query && socket.handshake.query.token) {
-        jwt.verify(socket.handshake.query.token, SECRET, function(
-            err,
-            decoded
-        ) {
-            if (err) return next(new Error('Authentication error'));
-            socket.decoded = decoded;
-            next();
-        });
-    } else {
-        next(new Error('Authentication error'));
-    }
-});
 io.on('connection', function(socket) {
-    socket.on('broadcast', function({ room, data }) {
-        socket.broadcast.to(room).emit(data);
-    });
+    console.log(`SOCKET CONNECTION`, socket.id);
+    socket.on('join', (roomName) => {
+        console.log(`[${socket.id}] Socket requested room [${roomName}]`);
+        socket.join(roomName);
+        setTimeout(() => {
+            console.log(socket.rooms);
+        }, 500);
+    })
 });
 // === === SOCKET IO === === ===
-
-app.listen(port, () => {
+// '192.168.1.7'
+server.listen(port, () => {
     console.log(`SERVER IS UP @`, port);
 });
