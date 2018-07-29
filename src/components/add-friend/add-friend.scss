@@ -4,6 +4,7 @@
     height: 100%;
     @extend .AllCenter;
     .disabled {
+        display: none;
         opacity: 1;
         filter:none;
         background-color: gray;

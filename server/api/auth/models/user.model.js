@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import MBUV from 'mongoose-beautiful-unique-validation';
-// const jdenticon = require("jdenticon");
-var identicon = require('identicon');
+import identicon from 'identicon.js';
+import md5 from 'mdb';
 import fs from 'fs';
 const UserSchema = new mongoose.Schema({
     name: {
@@ -40,8 +40,8 @@ UserSchema.pre('save', function (next) {
         return text;
     };
     let id = make_id();
-    console.log(id);
-    let png = identicon.generateSync({ id: id, size: 200 });
+    let hash = md5(id);
+    let png = new Identicon(hash, 420).toString()
     fs.writeFileSync(`${__dirname}/../../../public/img/avatars/${id}.png`, png);
     this.avatar = '/static/img/avatars/' + id + '.png';
     next()

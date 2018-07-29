@@ -95,7 +95,7 @@ export const FETCH_PENDING = () => {
             if (data.next) {
                 dispatch({
                     type: 'SET_PENDING_REQUESTS',
-                    payload: {pending_requests:data.pending_requests}
+                    payload: { pending_requests: data.pending_requests }
                 });
             } else {
                 dispatch({ type: 'FETCH_PENDING_ERROR', payload: data });
@@ -107,18 +107,25 @@ export const FETCH_PENDING = () => {
 };
 export const FRIEND_REQUEST = full_id => {
     return async dispatch => {
+        dispatch({
+            type: 'FRIEND_REQUEST_ERROR',
+            payload: { message: undefined }
+        });
         try {
             let { data } = await authenticated.post('/core/friend-request', {
-                id: full_id
+                name_id: full_id
             });
             if (data.next) {
-                dispatch({
+                return dispatch({
                     type: 'ADD_PENDING',
                     payload: { redirect: true, pending: data.pending }
                 });
             } else {
-                dispatch({ type: 'ADD_PENDING_ERROR', payload: data });
-                console.log('Error', data);
+                console.log('Add Friend Error', data);
+                return dispatch({
+                    type: 'FRIEND_REQUEST_ERROR',
+                    payload: { message: data.message }
+                });
             }
         } catch (error) {
             console.log('Catch', error);

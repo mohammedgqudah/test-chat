@@ -31,7 +31,7 @@ export default (state, { type, payload }) => {
                 );
             else if (error == 'InvalidBody')
                 return errorMessage('Please enter valid data');
-            else return errorMessage('Something went wrong')
+            else return errorMessage('Something went wrong');
             break;
         }
         case LOGIN_SUCCESS: {
@@ -43,7 +43,12 @@ export default (state, { type, payload }) => {
             localStorage.setItem('USER_AVATAR', payload.user.avatar);
             return {
                 ...state,
-                auth: { ...auth, user: true, logging_in: false, logged_in: true}
+                auth: {
+                    ...auth,
+                    user: true,
+                    logging_in: false,
+                    logged_in: true
+                }
             };
             break;
         }

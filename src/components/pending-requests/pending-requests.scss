@@ -1,0 +1,10 @@
+@import '../app/base';
+.PendingRequests {
+    height: 100%;
+    .flex {
+        @extend .AllCenter;
+        .con {
+            width: 90%;
+        }
+    }
+}

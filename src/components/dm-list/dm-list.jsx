@@ -11,7 +11,7 @@ class Item extends Component {
         return (
             <Link
                 to={`/@me/channel/${conversation._id}`}
-                className={"dm-conversation-link " + this.props.className}
+                className={'dm-conversation-link ' + this.props.className}
                 activeClassName="active"
             >
                 <div>
@@ -39,7 +39,7 @@ class Friends extends Component {
         return (
             <Link to={`/@me/friends`} className="dm-conversation-link">
                 <div>
-                    <Icon icon={group} size={20}/>
+                    <Icon icon={group} size={20} />
                 </div>
                 <div
                     style={{
@@ -65,7 +65,13 @@ class DMList extends Component {
                     <span className="title">direct messages</span>
                     {store.dm.friends.map((conversation, idx) => {
                         conversation = _helper.conversationUsers(conversation);
-                        return <Item conversation={conversation} className={`idx${idx}`}/>;
+                        return (
+                            <Item
+                                key={conversation._id}
+                                conversation={conversation}
+                                className={`idx${idx}`}
+                            />
+                        );
                     })}
                 </div>
                 <div className="user-info-con">

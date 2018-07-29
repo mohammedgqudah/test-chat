@@ -12,8 +12,10 @@ class AddFriend extends Component {
     }
     onSubmit(evt) {
         evt.preventDefault();
-        let { dispatch, actions } = this.props;
-        dispatch(actions.FRIEND_REQUEST(this.state.full_id));
+        let { actions } = this.props;
+        if (!this.state.error) {
+            actions.FRIEND_REQUEST(this.state.full_id);
+        }
     }
     onValue({ value, name }) {
         if (/\w+#\d\d\d\d/.test(value)) {
@@ -23,6 +25,7 @@ class AddFriend extends Component {
         }
     }
     render() {
+        let { store } = this.props;
         return (
             <div className="AddFriend">
                 <div style={{ width: '70%' }}>
@@ -32,11 +35,9 @@ class AddFriend extends Component {
                             match={/\w+#\d\d\d\d/}
                             onValue={this.onValue}
                             style={{ border: 'none' }}
+                            error={store.dm.friend_request_error}
                         />
-                        <Button
-                            name="add"
-                            extraClass={this.state.error && 'disabled'}
-                        />
+                        <Button name="add" extraClass={'disabled'} />
                     </form>
                 </div>
             </div>

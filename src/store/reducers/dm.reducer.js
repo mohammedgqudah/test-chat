@@ -62,9 +62,19 @@ export default (state, { type, payload }) => {
                 ...state,
                 dm: {
                     ...state.dm,
-                    pending: [...state.dm.pending, pending]
+                    pending_requests: [...state.dm.pending_requests, pending]
                 }
             };
+            break;
+        }
+        case "FRIEND_REQUEST_ERROR": {
+            return {
+                ...state,
+                dm: {
+                    ...state.dm,
+                    friend_request_error: payload.message
+                }
+            }
             break;
         }
         case 'SET_PENDING_REQUESTS': {
